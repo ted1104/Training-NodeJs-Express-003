@@ -1,18 +1,14 @@
 const express = require("express");
-const path = require("path");
 const app = express();
-
-app.use(express.static("./public"));
+const { people, products } = require("./data");
 
 app.get("/", (req, res) => {
-  res.status(200).sendFile(path.resolve(__dirname, "./navbar-app/index.html"));
-  //   console.log();
+  res.json([{ name: "Teddy" }, { name: "Walter" }]);
 });
 
 app.all("*", (req, res) => {
-  res.status(404).send("Oops! Ressouce not found");
+  res.status(404).json({ message: "Welcome to our public Api" });
 });
-
 app.listen(5000, () => {
-  console.log("Server listen on 5000 ...");
+  console.log("Server is listing on port 5000 ...");
 });
