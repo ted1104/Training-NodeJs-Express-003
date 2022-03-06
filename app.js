@@ -3,7 +3,7 @@ const app = express();
 const { people, products } = require("./data");
 
 app.get("/", (req, res) => {
-  res.json([{ name: "Teddy" }, { name: "Walter" }]);
+  res.json(products);
 });
 
 app.all("*", (req, res) => {
