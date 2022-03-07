@@ -1,23 +1,30 @@
 const express = require("express");
 const app = express();
+const logger = require("./middleware/logger");
+const authorize = require("./middleware/authorize");
 
-const logger = (req, res, next) => {
-  const method = req.method;
-  const url = req.url;
-  const time = new Date().getFullYear();
+/*
+  app.use prends affecte uniquement le contenu en bas de soi, et ca n'affecte pas le contenu en haut de
+  sa declaration
+*/
+app.use([logger, authorize]);
 
-  console.log(method, url, time);
-  next();
-};
-
-app.get("/", logger, (req, res) => {
+app.get("/", (req, res) => {
   res.send("Home");
 });
 
-app.get("/about", logger, (req, res) => {
+app.get("/about", (req, res) => {
   res.send("About");
 });
 
-app.listen(5000, () => {
+app.get("/api/product", (req, res) => {
+  res.send("Products");
+});
+
+app.get("/api/items", (req, res) => {
+  res.send("Items");
+});
+
+app.listen(5001, () => {
   console.log("server is listing on port 5000 ...");
 });
